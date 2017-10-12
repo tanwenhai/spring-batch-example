@@ -21,9 +21,18 @@
             <listener ref="sysoutListener"/>
             <listener ref="sysoutAnnotionListener"/>
         </listeners>
+        <validator ref="validator"/>
     </job>
     <bean:bean id="sysoutListener" class="com.twh.example.ch04.listener.SystemOutJobExecutionListener"/>
     <bean:bean id="sysoutAnnotionListener" class="com.twh.example.ch04.listener.SystemOut"/>
+    <bean:bean id="validator" class="org.springframework.batch.core.job.DefaultJobParametersValidator">
+        <bean:property name="requiredKeys">
+            <bean:value>date</bean:value>
+        </bean:property>
+        <bean:property name="optionalKeys">
+            <bean:value>name</bean:value>
+        </bean:property>
+    </bean:bean>
     <bean:bean id="csvItemReader"
                class="org.springframework.batch.item.file.FlatFileItemReader"
                scope="step">
