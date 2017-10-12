@@ -10,6 +10,7 @@ public class SystemOut {
     @BeforeJob
     public void beforeJob(JobExecution jobExecution) {
         System.out.println("SystemOut create time at " + jobExecution.getCreateTime());
+
     }
 
     @AfterJob

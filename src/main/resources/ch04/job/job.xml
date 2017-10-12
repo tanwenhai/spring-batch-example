@@ -11,6 +11,25 @@
     http://www.springframework.org/schema/task/spring-task-3.0.xsd">
     <bean:import resource="classpath:ch04/job-context.xml"/>
     <task:executor id="executor" pool-size="5"/>
+    <task:scheduler id="scheduler" pool-size="10"/>
+    <!--每一秒钟，执行scheduler.launch-->
+    <task:scheduled-tasks scheduler="scheduler">
+        <task:scheduled ref="schedulerLauncher" method="launch" fixed-rate="1000"/>
+    </task:scheduled-tasks>
+    <job id="helloWorldJob">
+        <step id="helloWorldStep">
+            <tasklet>
+                <bean:bean class="com.twh.example.ch04.HelloWorldTasklet"/>
+            </tasklet>
+        </step>
+    </job>
+
+    <bean:bean id="schedulerLauncher"
+               class="com.twh.example.ch04.scheduler.SchedulerLauncher">
+        <bean:property name="job" ref="helloWorldJob"/>
+        <bean:property name="jobLauncher" ref="jobLauncher"/>
+    </bean:bean>
+
     <!-- 异步作业调度器 -->
     <bean:bean id="jobLauncherAsync"
                class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
