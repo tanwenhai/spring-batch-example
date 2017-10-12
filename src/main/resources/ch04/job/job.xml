@@ -7,7 +7,12 @@
     http://www.springframework.org/schema/batch
     http://www.springframework.org/schema/batch/spring-batch-2.2.xsd">
     <bean:import resource="classpath:ch03/job-context.xml"/>
-    <job id="billJob">
+    <job id="baseJob" abstract="true">
+        <listeners>
+            <listener ref="sysoutAnnotionListener"/>
+        </listeners>
+    </job>
+    <job id="billJob" parent="baseJob">
         <step id="billStep">
             <tasklet transaction-manager="transactionManager">
                 <chunk reader="csvItemReader"
@@ -17,9 +22,8 @@
                 </chunk>
             </tasklet>
         </step>
-        <listeners>
+        <listeners merge="true">
             <listener ref="sysoutListener"/>
-            <listener ref="sysoutAnnotionListener"/>
         </listeners>
         <validator ref="validator"/>
     </job>
