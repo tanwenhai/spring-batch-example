@@ -2,11 +2,22 @@
 <bean:beans xmlns="http://www.springframework.org/schema/batch"
             xmlns:bean="http://www.springframework.org/schema/beans"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:task="http://www.springframework.org/schema/task"
             xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
     http://www.springframework.org/schema/batch
-    http://www.springframework.org/schema/batch/spring-batch-2.2.xsd">
-    <bean:import resource="classpath:ch03/job-context.xml"/>
+    http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+    <bean:import resource="classpath:ch04/job-context.xml"/>
+    <task:executor id="executor" pool-size="5"/>
+    <!-- 异步作业调度器 -->
+    <bean:bean id="jobLauncherAsync"
+               class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+        <bean:property name="taskExecutor" ref="executor"/>
+        <bean:property name="jobRepository" ref="jobRepository"/>
+    </bean:bean>
+
     <job id="baseJob" abstract="true">
         <listeners>
             <listener ref="sysoutAnnotionListener"/>

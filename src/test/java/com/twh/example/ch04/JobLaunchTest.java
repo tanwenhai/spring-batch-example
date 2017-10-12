@@ -1,4 +1,4 @@
-package com.twh.example.ch04.ch03;
+package com.twh.example.ch04;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
