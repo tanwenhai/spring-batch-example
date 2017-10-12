@@ -26,7 +26,7 @@ public class JobLaunchTest {
     @Test
     public void billJob() throws Exception {
         JobExecution result = jobLauncher.run(job, (new JobParametersBuilder()
-                .addDate("date", new Date())).toJobParameters());
+                .addDate("date", new Date()).addString("inputResource", "classpath:ch03/data/credit-card-bill-201303.csv")).toJobParameters());
         System.out.println(result.toString());
     }
 }

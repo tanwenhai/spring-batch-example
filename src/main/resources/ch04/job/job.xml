@@ -34,14 +34,17 @@
             <bean:value>date</bean:value>
         </bean:property>
         <bean:property name="optionalKeys">
-            <bean:value>name</bean:value>
+            <bean:list>
+                <bean:value>name</bean:value>
+                <bean:value>inputResource</bean:value>
+            </bean:list>
         </bean:property>
     </bean:bean>
     <bean:bean id="csvItemReader"
                class="org.springframework.batch.item.file.FlatFileItemReader"
                scope="step">
         <bean:property name="resource"
-                       value="classpath:ch03/data/credit-card-bill-201303.csv"/>
+                       value="#{jobParameters['inputResource']}"/>
         <bean:property name="lineMapper">
             <bean:bean
                 class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
